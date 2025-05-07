@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Define the structure for a student record
+struct Student {
+    int rollNo;
+    string name;
+    float sgpa;
+};
+
+// Function to perform Bubble Sort to arrange students by roll number in ascending order
+void bubbleSortByRollNo(Student arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j].rollNo > arr[j + 1].rollNo) {
+                // Swap the students
+                Student temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Function to perform Bubble Sort to arrange students alphabetically by name
+void bubbleSortByName(Student arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j].name > arr[j + 1].name) {
+                // Swap the students
+                Student temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    const int maxSize = 15;
+    Student students[maxSize];
+
+    // Input student records
+    cout << "Enter student records (Roll No, Name, SGPA):" << endl;
+    for (int i = 0; i < maxSize; i++) {
+        cout << "Student " << i + 1 << ":\n";
+        cout << "Roll No: ";
+        cin >> students[i].rollNo;
+        cout << "Name: ";
+        cin.ignore();
+        getline(cin, students[i].name);
+        cout << "SGPA: ";
+        cin >> students[i].sgpa;
+    }
+
+    // Sort by roll number in ascending order
+    bubbleSortByRollNo(students, maxSize);
+
+    // Display the roll call list sorted by roll number
+    cout << "\nRoll Call List (Sorted by Roll No):" << endl;
+    cout << "Roll No\tName\t\tSGPA" << endl;
+    for (int i = 0; i < maxSize; i++) {
+        cout << students[i].rollNo << "\t" << students[i].name << "\t\t" << students[i].sgpa << endl;
+    }
+
+    // Sort alphabetically by name
+    bubbleSortByName(students, maxSize);
+
+    // Display the list sorted by name
+    cout << "\nList of Students (Sorted Alphabetically by Name):" << endl;
+    cout << "Roll No\tName\t\tSGPA" << endl;
+    for (int i = 0; i < maxSize; i++) {
+        cout << students[i].rollNo << "\t" << students[i].name << "\t\t" << students[i].sgpa << endl;
+    }
+
+    return 0;
+}

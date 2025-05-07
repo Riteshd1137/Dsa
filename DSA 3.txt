@@ -1,0 +1,124 @@
+#include <iostream>
+using namespace std;
+
+class CircularQueue {
+private:
+    int* arr;
+    int front;
+    int rear;
+    int maxSize;
+    int currentSize;
+
+public:
+    CircularQueue(int size) {
+        maxSize = size;
+        arr = new int[maxSize];
+        front = rear = -1;
+        currentSize = 0;
+    }
+
+    ~CircularQueue() {
+        delete[] arr;
+    }
+
+    bool isEmpty() {
+        return currentSize == 0;
+    }
+
+    bool isFull() {
+        return currentSize == maxSize;
+    }
+
+    void enqueue(int data) {
+        if (isFull()) {
+            cout << "Queue is full. Cannot enqueue." << endl;
+            return;
+        }
+
+        if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % maxSize;
+        }
+
+        arr[rear] = data;
+        currentSize++;
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty. Cannot dequeue." << endl;
+            return;
+        }
+
+        if (front == rear) {
+            front = rear = -1;
+        } else {
+            front = (front + 1) % maxSize;
+        }
+
+        currentSize--;
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        int i = front;
+        cout << "Queue elements: ";
+        while (true) {
+            cout << arr[i] << " ";
+            if (i == rear) {
+                break;
+            }
+            i = (i + 1) % maxSize;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter the size of the circular queue: ";
+    cin >> size;
+
+    CircularQueue queue(size);
+
+    int choice, data;
+
+    while (true) {
+        cout << "\nCircular Queue Operations:" << endl;
+        cout << "1. Enqueue" << endl;
+        cout << "2. Dequeue" << endl;
+        cout << "3. Display" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter data to enqueue: ";
+                cin >> data;
+                queue.enqueue(data);
+                break;
+
+            case 2:
+                queue.dequeue();
+                break;
+
+            case 3:
+                queue.display();
+                break;
+
+            case 4:
+                exit(0);
+
+            default:
+                cout << "Invalid choice. Try again." << endl;
+        }
+    }
+
+    return 0;
+}
